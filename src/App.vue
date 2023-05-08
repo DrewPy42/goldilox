@@ -4,8 +4,12 @@
   </header>
 
   <RouterView />
-  <footer>
-    <a href="https://depositphotos.com/vector-images/objects.html">Green and Yellow Printed Circuit Board - depositphotos.com</a>
+  <footer class="bg-primary bg-gradient fixed-bottom p-3 mb-5">
+    <div class="col-md-12 text-end">
+      <div class="copyright fs-6 text-white">
+        Copyright ©{{currentYear}} by M. Andrew Patterson. All rights reserved.
+      </div>
+    </div>
   </footer>
 </template>
 
@@ -13,17 +17,23 @@
 <script>
   import { RouterView } from 'vue-router';
   import mainMenu from './components/menus/mainMenu.vue';
+  import {computed} from "vue";
   export default {
-  components: {
+    components: {
       mainMenu,
+      RouterView,
     },
     setup() {
+      const currentYear = computed(() => {
+        return new Date().getFullYear();
+      });
 
+      return {currentYear};
     }
   }
 </script>
 
 
-<style scoped>
+<style lang="scss" scoped>
 
 </style>

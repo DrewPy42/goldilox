@@ -1,15 +1,18 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary bg-gradient">
     <div class="container-fluid">
-      <img class="navbar-brand fit-image" src="../../../public/logo-lg.png" alt="DataMAP Logo">
+      <img class="navbar-brand fit-image" src="/banner.jpg" alt="Banner of comic book covers">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <router-link
-            class="nav-link"
-            to="/"
-          >
-          Home
-         </router-link>
+          <div>
+            <router-link
+              class="nav-link"
+              to="/"
+            >
+              <font-awesome-icon :icon="['fas', 'house']" class="icon" />
+              Home
+           </router-link>
+          </div>
         </li>
       </ul>
     </div>
