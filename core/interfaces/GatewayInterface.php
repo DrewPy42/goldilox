@@ -2,9 +2,6 @@
 /**
  * Abstract class for building gateways easier
  *
- * @todo insertMany? updateMany? deleteMany?
- * @todo maybe a getRequiredFieldNames abstract method? would certainly help with insertion validation and maybe some
- *       update queries
  */
 abstract class GatewayInterface {
 
