@@ -1,4 +1,9 @@
 <?php
+
+namespace interfaces;
+use PDO;
+use PDOStatement;
+
 /**
  * Abstract class for building gateways easier
  *
@@ -43,9 +48,10 @@ abstract class GatewayInterface {
      * @param string $query raw sql go here
      * @param array  $binds will bind these values to your sql
      *
-     * @return PDOStatement
+     * @return false|\PDOStatement
      */
-    public function sql(string $query, array $binds = []): PDOStatement {
+    public function sql(string $query, array $binds = []): false|\PDOStatement
+    {
         $q = $this->db->prepare($query);
         $q->execute($binds);
         return $q;
