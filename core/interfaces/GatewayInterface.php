@@ -1,8 +1,10 @@
 <?php
 
 namespace interfaces;
+include __DIR__ . "/../autoload.php";
 use PDO;
 use PDOStatement;
+use connectors\DatabaseConnector;
 
 /**
  * Abstract class for building gateways easier
@@ -16,10 +18,11 @@ abstract class GatewayInterface {
     protected PDO $db;
 
     /**
-     * @param PDO $db must pass the db connection to be used
+     *
      */
-    public function __construct(PDO $db) {
-        $this->db = $db;
+    public function __construct() {
+        $database = new DatabaseConnector();
+        $this->db = $database->getPDO();
     }
 
     /**
@@ -48,9 +51,9 @@ abstract class GatewayInterface {
      * @param string $query raw sql go here
      * @param array  $binds will bind these values to your sql
      *
-     * @return false|\PDOStatement
+     * @return false|PDOStatement
      */
-    public function sql(string $query, array $binds = []): false|\PDOStatement
+    public function sql(string $query, array $binds = []): false|PDOStatement
     {
         $q = $this->db->prepare($query);
         $q->execute($binds);

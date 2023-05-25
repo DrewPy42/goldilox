@@ -1,5 +1,7 @@
 <?php
 namespace gateways;
+include __DIR__ . "/../autoload.php";
+
 use interfaces\GatewayInterface;
 
 class SeriesGateway extends GatewayInterface {

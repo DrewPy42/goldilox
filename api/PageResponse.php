@@ -1,5 +1,5 @@
 <?php
-
+namespace api;
 use JetBrains\PhpStorm\NoReturn;
 
 /**
