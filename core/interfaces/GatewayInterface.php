@@ -45,6 +45,8 @@ abstract class GatewayInterface {
      */
     abstract protected function getEditableFieldNames(): string;
 
+    abstract protected function getQueryJoins() : string;
+
     /**
      * For raw sql use this, be careful with it though obviously
      *
@@ -101,15 +103,13 @@ abstract class GatewayInterface {
     /**
      * Gets all objects from db table, really should only be used for small tables
      *
-     * @param string|null $fields optional fields to get for query, will default to $this->getFieldNames()
-     * @param string|null $joins  will use these joins if provided
-     *
      * @return array|null either a result set (array of results) or probably null on error
      */
-    public function getAll(string $fields = NULL, string $joins = NULL): ?array {
+    public function getAll(): ?array {
+        $j = $this->getQueryJoins();
         $t = $this->getTableName();
-        $f = $fields ?? $this->getFieldNames();
-        $q = $this->db->prepare("SELECT $f FROM $t $joins");
+        $f = $this->getFieldNames();
+        $q = $this->db->prepare("SELECT $f FROM $t $j");
         $q->execute();
         return $q->fetchAll(PDO::FETCH_ASSOC);
     }

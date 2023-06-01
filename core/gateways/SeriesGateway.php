@@ -29,4 +29,8 @@ class SeriesGateway extends GatewayInterface {
     series_value_gain,volume_count,issue_count,copy_count,notes,location,owner,active,created,edited,missing_issues,
     duplicate_issues";
   }
+
+  protected function getQueryJoins() : string {
+      return '';
+  }
 }
