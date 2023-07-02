@@ -1,9 +1,9 @@
 export interface RequestOptionsModel {
-  body?: string,
-  credentials?: string,
+  body?: string
+  credentials?: string
   headers: {
-    'Authorization'? : string,
-    'Content-Type'?: string,
-  },
-  method?: string,
+    Authorization?: string
+    'Content-Type'?: string
+  }
+  method?: string
 }

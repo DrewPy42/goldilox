@@ -113,19 +113,23 @@ export default {
     function onClickFirstPage() {
       emit('pageChanged', 1)
     }
+
     function onClickPreviousPage() {
       if (props.currentPage !== 1) {
         emit('pageChanged', props.currentPage - 1)
       }
     }
+
     function onClickPage(page) {
       emit('pageChanged', page)
     }
+
     function onClickNextPage() {
       if (props.currentPage !== props.totalPages) {
         emit('pageChanged', props.currentPage + 1)
       }
     }
+
     function onClickLastPage() {
       emit('pageChanged', props.totalPages)
     }

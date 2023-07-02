@@ -1,13 +1,16 @@
 <?php
+
 namespace services;
 include __DIR__ . "/../autoload.php";
+
 use gateways\SeriesGateway;
 
-class SeriesService {
-
+class SeriesService
+{
     private SeriesGateway $gateway;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->gateway = new SeriesGateway();
     }
 }

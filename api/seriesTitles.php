@@ -2,6 +2,7 @@
 namespace api;
 include __DIR__ . "/../core/autoload.php";
 
+use api\responses\JSONResponse;
 use gateways\SeriesGateway;
 
 $gateway = new SeriesGateway();

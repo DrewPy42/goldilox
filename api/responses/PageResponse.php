@@ -1,5 +1,5 @@
 <?php
-namespace api;
+namespace api\responses;
 use JetBrains\PhpStorm\NoReturn;
 
 /**
@@ -35,7 +35,7 @@ class PageResponse {
      *
      * @return void
      */
-    public function respondAndExit(): void {
+    #[NoReturn] public function respondAndExit(): void {
         self::respondAndExitStatic($this->responseCode, $this->responseHTML);
     }
 

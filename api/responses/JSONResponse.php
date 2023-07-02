@@ -1,5 +1,5 @@
 <?php
-namespace api;
+namespace api\responses;
 use JetBrains\PhpStorm\NoReturn;
 
 /**
@@ -17,12 +17,12 @@ class JSONResponse {
      * Builds response to send to client
      *
      * @param int         $responseCode    response code to send
-     * @param mixed       $responseData    for any api data to send objects ect. will be converted to json
+     * @param mixed|null $responseData    for any api data to send objects ect. will be converted to json
      * @param string|null $responseMessage a general message to send to client
      * @param array|null  $responseErrors  any error messages to send to client
      * @param int         $responseCount   count of records pulled.
      */
-    public function __construct(int $responseCode = 200, $responseData = NULL, ?string $responseMessage = NULL, array $responseErrors = NULL, int $responseCount = 0) {
+    public function __construct(int $responseCode = 200, mixed $responseData = NULL, ?string $responseMessage = NULL, array $responseErrors = NULL, int $responseCount = 0) {
         $this->responseCode = $responseCode;
         $this->responseData = $responseData;
         $this->responseMessage = $responseMessage;
@@ -44,7 +44,7 @@ class JSONResponse {
      *
      * @return void
      */
-    public function respondAndExit(): void {
+    #[NoReturn] public function respondAndExit(): void {
         self::respondAndExitStatic($this->responseCode, $this->responseData, $this->responseMessage, $this->responseErrors, $this->responseCount);
     }
 
@@ -52,14 +52,14 @@ class JSONResponse {
      * Sends response back to client
      *
      * @param int         $responseCode    response code to send
-     * @param mixed       $responseData    for any api data to send objects ect. will be converted to json
+     * @param mixed|null $responseData    for any api data to send objects ect. will be converted to json
      * @param string|null $responseMessage a general message to send to client
      * @param array|null  $responseErrors  any error messages to send to client
      * @param int         $responseCount   count of records retrieved
      *
      * @return void
      */
-    public static function respondStatic(int $responseCode = 200, $responseData = NULL, ?string $responseMessage = NULL, array $responseErrors = NULL, int $responseCount = 0): void {
+    public static function respondStatic(int $responseCode = 200, mixed $responseData = NULL, ?string $responseMessage = NULL, array $responseErrors = NULL, int $responseCount = 0): void {
         header(http_response_code($responseCode));
         $response = [];
         if(isset($responseMessage)) $response["msg"] = $responseMessage;
@@ -73,14 +73,14 @@ class JSONResponse {
      * Sends response back to client and ends script execution
      *
      * @param int         $responseCode    response code to send
-     * @param mixed       $responseData    for any api data to send objects ect. will be converted to json
+     * @param mixed|null $responseData    for any api data to send objects ect. will be converted to json
      * @param string|null $responseMessage a general message to send to client
      * @param array|null  $responseErrors  any error messages to send to client
      * @param int         $responseCount   count of records retrieved
      *
      * @return void
      */
-    #[NoReturn] public static function respondAndExitStatic(int $responseCode = 200, $responseData = NULL, ?string $responseMessage = NULL, array $responseErrors = NULL, int $responseCount = 0): void {
+    #[NoReturn] public static function respondAndExitStatic(int $responseCode = 200, mixed $responseData = NULL, ?string $responseMessage = NULL, array $responseErrors = NULL, int $responseCount = 0): void {
         self::respondStatic($responseCode, $responseData, $responseMessage, $responseErrors, $responseCount);
         exit;
     }
@@ -110,7 +110,7 @@ class JSONResponse {
     /**
      * @param mixed $responseData
      */
-    public function setResponseData($responseData): void {
+    public function setResponseData(mixed $responseData): void {
         $this->responseData = $responseData;
     }
 

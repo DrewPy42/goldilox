@@ -2,6 +2,7 @@
 
 namespace interfaces;
 include __DIR__ . "/../autoload.php";
+
 use PDO;
 use PDOStatement;
 use connectors\DatabaseConnector;
@@ -10,7 +11,8 @@ use connectors\DatabaseConnector;
  * Abstract class for building gateways easier
  *
  */
-abstract class GatewayInterface {
+abstract class GatewayInterface
+{
 
     /**
      * @var PDO contains the db connection to be used
@@ -20,7 +22,8 @@ abstract class GatewayInterface {
     /**
      *
      */
-    public function __construct() {
+    public function __construct()
+    {
         $database = new DatabaseConnector();
         $this->db = $database->getPDO();
     }
@@ -45,13 +48,13 @@ abstract class GatewayInterface {
      */
     abstract protected function getEditableFieldNames(): string;
 
-    abstract protected function getQueryJoins() : string;
+    abstract protected function getQueryJoins(): string;
 
     /**
      * For raw sql use this, be careful with it though obviously
      *
      * @param string $query raw sql go here
-     * @param array  $binds will bind these values to your sql
+     * @param array $binds will bind these values to your sql
      *
      * @return false|PDOStatement
      */
@@ -65,13 +68,14 @@ abstract class GatewayInterface {
     /**
      * Gets object from db based on primary key
      *
-     * @param string      $id     the primary key value
+     * @param string $id the primary key value
      * @param string|null $fields optional fields to get for query, will default to $this->getFieldNames()
-     * @param string|null $joins  will use these joins if provided
+     * @param string|null $joins will use these joins if provided
      *
      * @return array|null either a result set (array of results) or probably null on error
      */
-    public function get(string $id, string $fields = NULL, string $joins = NULL): ?array {
+    public function get(string $id, string $fields = NULL, string $joins = NULL): ?array
+    {
         $t = $this->getTableName();
         $pk = $this->getPrimaryKeyName();
         $f = $fields ?? $this->getFieldNames();
@@ -84,13 +88,14 @@ abstract class GatewayInterface {
     /**
      * Gets objects from db based on set of primary keys
      *
-     * @param array       $ids    set of primary key values
+     * @param array $ids set of primary key values
      * @param string|null $fields optional fields to get for query, will default to $this->getFieldNames()
-     * @param string|null $joins  will use these joins if provided
+     * @param string|null $joins will use these joins if provided
      *
      * @return array|null either a result set (array of results) or probably null on error
      */
-    public function getMany(array $ids, string $fields = NULL, string $joins = NULL): ?array {
+    public function getMany(array $ids, string $fields = NULL, string $joins = NULL): ?array
+    {
         $t = $this->getTableName();
         $pk = $this->getPrimaryKeyName();
         $f = $fields ?? $this->getFieldNames();
@@ -105,7 +110,8 @@ abstract class GatewayInterface {
      *
      * @return array|null either a result set (array of results) or probably null on error
      */
-    public function getAll(): ?array {
+    public function getAll(): ?array
+    {
         $j = $this->getQueryJoins();
         $t = $this->getTableName();
         $f = $this->getFieldNames();
@@ -121,7 +127,8 @@ abstract class GatewayInterface {
      *
      * @return string
      */
-    public function insert(array $obj): string {
+    public function insert(array $obj): string
+    {
         $q = $this->db->prepare($this->buildInsertQuery($obj));
         $q = $this->bindParams($q, $obj);
         $q->execute();
@@ -132,11 +139,12 @@ abstract class GatewayInterface {
      * Updates an object in the db
      *
      * @param string $id
-     * @param array  $obj
+     * @param array $obj
      *
      * @return void
      */
-    public function update(string $id, array $obj): void {
+    public function update(string $id, array $obj): void
+    {
         $pk = $this->getPrimaryKeyName();
         $q = $this->db->prepare($this->buildUpdateQuery($obj, "WHERE $pk = :$pk"));
         $q->bindParam(":$pk", $id);
@@ -151,7 +159,8 @@ abstract class GatewayInterface {
      *
      * @return void
      */
-    public function delete(string $id): void {
+    public function delete(string $id): void
+    {
         $t = $this->getTableName();
         $pk = $this->getPrimaryKeyName();
         $q = $this->db->prepare("DELETE FROM $t WHERE $pk = :$pk");
@@ -168,16 +177,21 @@ abstract class GatewayInterface {
      *
      * @todo what do with discarded values not matched? not throw error, but just log them out maybe?
      */
-    protected function buildInsertQuery(array $obj): string {
+    protected function buildInsertQuery(array $obj): string
+    {
         $t = $this->getTableName();
         $ef = $this->getEditableFieldNames();
         $usedFieldNamesArr = array_filter(
             explode(",", $ef),
-            function($field) use ($obj) { return key_exists($field, $obj); }
+            function ($field) use ($obj) {
+                return key_exists($field, $obj);
+            }
         );
         $usedFieldNames = implode(",", $usedFieldNamesArr);
         $values = implode(",", array_map(
-            function($field) { return ":$field"; },
+            function ($field) {
+                return ":$field";
+            },
             $usedFieldNamesArr
         ));
         return "INSERT INTO $t ($usedFieldNames) VALUES ($values)";
@@ -186,21 +200,26 @@ abstract class GatewayInterface {
     /**
      * Builds an update query based on what fields are editable in the db and what fields are in given object
      *
-     * @param array  $obj         the object with values to use for update
+     * @param array $obj the object with values to use for update
      * @param string $whereClause a var to specify the where clause on update e.g. "WHERE id=:id"
      *
      * @return string the built query
      *
      * @todo what do with discarded values not matched? not throw error, but just log them out maybe?
      */
-    protected function buildUpdateQuery(array $obj, string $whereClause): string {
+    protected function buildUpdateQuery(array $obj, string $whereClause): string
+    {
         $t = $this->getTableName();
         $ef = $this->getEditableFieldNames();
         $values = implode(",", array_map(
-            function($field) { return $field . "=:" . $field; },
+            function ($field) {
+                return $field . "=:" . $field;
+            },
             array_filter(
                 explode(",", $ef),
-                function($field) use ($obj) { return key_exists($field, $obj); }
+                function ($field) use ($obj) {
+                    return key_exists($field, $obj);
+                }
             )
         ));
         return "UPDATE $t SET $values $whereClause";
@@ -211,19 +230,20 @@ abstract class GatewayInterface {
      * inserts
      *
      * @param PDOStatement $q
-     * @param array        $obj
+     * @param array $obj
      *
      * @return PDOStatement
      *
      * @todo I think this can pretty much be deleted, I think there is built in way in ->execute() function
      */
-    protected function bindParams(PDOStatement $q, array $obj): PDOStatement {
+    protected function bindParams(PDOStatement $q, array $obj): PDOStatement
+    {
         $ef = $this->getEditableFieldNames();
         $editableFieldArr = explode(",", $ef);
         array_walk(
             $editableFieldArr,
-            function($field) use ($q, $obj) {
-                if(key_exists($field, $obj))
+            function ($field) use ($q, $obj) {
+                if (key_exists($field, $obj))
                     $q->bindParam(":$field", $obj[$field]);
             }
         );

@@ -34,6 +34,7 @@ export default function createActions(state: defaultStore) {
         return 'string'
     }
   }
+
   function getFilterField(filterKey: string): string {
     let fieldName = ''
     switch (filterKey) {
@@ -95,6 +96,7 @@ export default function createActions(state: defaultStore) {
     }
     return fieldName
   }
+
   function handleFilters(): any {
     const records = state.found.value
     const filters = state.filters.value
@@ -157,6 +159,7 @@ export default function createActions(state: defaultStore) {
     }
     return records
   }
+
   function handleFlags() {
     let flagString: string = ''
     flagString += `&page_size=${state.perPage.value}`
@@ -232,6 +235,7 @@ export default function createActions(state: defaultStore) {
     // }
     return encodeURI(flagString)
   }
+
   // function setUniqueList(fieldName: string, idField: string = '') : any {
   //   const uniqueIds: any[] = [];
   //   const uniqueList: any = ref([]);
