@@ -1,4 +1,4 @@
-import { RequestOptionsModel } from '../../models'
+import { RequestOptionsModel } from '@/core'
 
 export const fetchWrapper = {
   get: request('GET'),

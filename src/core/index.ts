@@ -5,3 +5,5 @@ export { createActions }
 export * from './functions/coreFunctions'
 export * from './functions/fetchWrapper'
 export * from './stores/defaultStores'
+export * from './models/request.options.model'
+export * from './models/series.model'
