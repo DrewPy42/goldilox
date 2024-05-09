@@ -1,18 +1,15 @@
 <template>
   <div>
-    <h1>SeriesModel Dashboard</h1>
+    <h1>Series Dashboard</h1>
   </div>
 </template>
 
 <script setup lang="ts">
 import { SeriesModel } from '@/core'
+import { defineProps } from 'vue'
 
 const props = defineProps<{
   series: SeriesModel[]
 }>()
-
-props.series
-console.log(props.series)
-<script>
-
-<style scoped lang="scss"></style>
+</script>
+<style scoped lang="scss" />

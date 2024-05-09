@@ -15,7 +15,7 @@
           <div>
             <router-link class="nav-link" to="/series">
               <font-awesome-icon :icon="['far', 'envelope']" class="icon" />
-              SeriesModel
+              Series
             </router-link>
           </div>
         </li>

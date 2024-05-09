@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import { createActions } from '../core'
-import { seriesStore } from '../core'
+import { createActions, fetchWrapper } from '../core'
+import { seriesStore } from '@/core'
 
 seriesStore.storeName = 'series'
 seriesStore.baseURL.value = '/api/series.php'
@@ -13,13 +13,11 @@ export const useSeriesStore = defineStore({
     ...seriesStore
   }),
   actions: {
-    ...createActions(seriesStore)
-    // searchName(name: string) {
-    //   fetchWrapper
-    //     .get(`${seriesStore.baseURL.value}/searchName/${name}?co=erstires`)
-    //     .then((response: any) => {
-    //       this.usersList = response.data
-    //     })
-    // }
+    ...createActions(seriesStore),
+    getAll() {
+      fetchWrapper.get(`${seriesStore.baseURL.value}`).then((response: any) => {
+        this.seriesList = response.data
+      })
+    }
   }
 })
