@@ -12,7 +12,7 @@ class DatabaseConnector
     {
         $dotenv = Dotenv::createMutable(__DIR__ . "/../../");
         $dotenv->load();
-        $pdo = new PDO("mysql:host={$_ENV["DBHOST"]};dbname={$_ENV["DBNAME"]}", $_ENV["DBUSER"], $_ENV["DBPASS"]);
+        $pdo = new PDO("mysql:host={$_ENV["MYSQL_HOST"]};dbname={$_ENV["MYSQL_DATABASE"]}", $_ENV["MYSQL_USER"], $_ENV["MYSQL_PASSWORD"]);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $pdo;
     }

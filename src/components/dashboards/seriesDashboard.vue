@@ -6,7 +6,6 @@
 
 <script setup lang="ts">
 import { SeriesModel } from '@/core'
-import { defineProps } from 'vue'
 
 const props = defineProps<{
   series: SeriesModel[]
