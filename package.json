@@ -31,6 +31,7 @@
     "vee-validate": "^4.9.6",
     "vue": "^3.2.47",
     "vue-axios": "^3.5.2",
+    "vue-fontawesome": "^0.0.2",
     "vue-loader": "^17.2.1",
     "vue-router": "^4.1.6",
     "vue-template-compiler": "^2.7.14"
